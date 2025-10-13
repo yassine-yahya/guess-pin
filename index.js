@@ -91,23 +91,42 @@ function handleComparaison() {
     let timesDisplay = document.querySelector("#times");
     if (timesDisplay) timesDisplay.innerHTML = `Attempt: ${times} of 5`;
 
-    let userArray = userInput.split("");
-    let randomArray = randomNumber.toString().split("");
+    const userArray = userInput.split("");
+    const randomArray = randomNumber.toString().split("");
 
+    // Count digits in random number
+    let counts = {};
+    randomArray.forEach(d => counts[d] = (counts[d] || 0) + 1);
+
+    // First pass: mark exact matches (green)
+    let colors = Array(4).fill("red");
     for (let i = 0; i < 4; i++) {
         if (userArray[i] === randomArray[i]) {
-            results[i].style.color = "green";
-        } else if (randomArray.includes(userArray[i])) {
-            results[i].style.color = "blue";
-        } else {
-            results[i].style.color = "red";
+            colors[i] = "green";
+            counts[userArray[i]]--;
         }
-        results[i].innerHTML = userArray[i];
     }
 
+    // Second pass: mark correct digits in wrong position (blue)
+    for (let i = 0; i < 4; i++) {
+        if (colors[i] === "red" && counts[userArray[i]] > 0) {
+            colors[i] = "blue";
+            counts[userArray[i]]--;
+        }
+    }
+
+    // Update the UI
+    for (let i = 0; i < 4; i++) {
+        results[i].innerHTML = userArray[i];
+        results[i].style.color = colors[i];
+    }
+
+    // Success or failure messages
     if (userInput === randomNumber.toString()) {
-        message.innerHTML = "🎉 Correct! You guessed the number!";
+        message.innerHTML = "🎉 Correct! You guessed the PIN!";
+        checkButton.disabled = true;
     } else if (times === 5) {
         message.innerHTML = `❌ Out of attempts! The number was ${randomNumber}. Press Start to try again.`;
+        checkButton.disabled = true;
     }
 }

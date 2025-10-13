@@ -1,7 +1,7 @@
 body {
     display: flex;
     flex-direction: column;
-    height: auto;
+    height: 100vh;
     margin: 0;
     background: rgb(2, 3, 17);
     background-size: 400% 400%;
@@ -13,10 +13,11 @@ body {
 #container{
     align-items: center;
     text-align: center;
-    padding: 10px;
-    margin: 10px auto ;
+    padding: 20px;
+    margin:auto;
     border-radius: 10px;
     width: fit-content;
+    height: auto;
     border: #16153b 1px solid;
     font-family:'Pixeboy', monospace;
 

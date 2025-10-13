@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Number game</title>
+</head>
+<body>
+    <div id="container">
+        <h1 id="title">Hack the PIN</h1>
+        <p>Try to guess the 4-digit number of PIN, You have 5 attempts!</p>
+        <button id="startButton" onclick="generateRandomNumber()">Start a game</button>
+
+        <input type="text" id="userInput" maxlength="4" placeholder="Enter your guess" required="true">
+        <!-- <button  id="checkButton" onclick="handleComparaison()">check</button> -->
+         <h5 id="times"></h5>
+        <h1 id="message"></h1>
+
+        <ul id="results">
+            <li id="result1"></li>
+            <li id="result2"></li>
+            <li id="result3"></li>
+            <li id="result4"></li>
+            
+
+
+        </ul>
+        <div id="colorLegend">
+    <h3>Color Meaning:</h3>
+    <ul>
+        <li><span class="legend-box correct"></span> Correct digit and position</li>
+        <li><span class="legend-box misplaced"></span> Digit exists but wrong position</li>
+        <li><span class="legend-box wrong"></span> Digit does not exist</li>
+    </ul>
+</div>
+    </div>
+</body>
+<footer>
+    <p>🎮 Developed by Yassine Yahya - 2025</p>
+</footer>
+</html>

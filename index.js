@@ -3,6 +3,7 @@ let randomNumber;
 let results = [];
 let times = 0;
 let message;
+let checkButton;
 
 document.addEventListener("DOMContentLoaded", function() {
     // Select result elements once
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     randomNumber = generateRandomNumber();
     console.log("Random number:", randomNumber);
 
-    // Trigger check with Enter key
+    // Trigger check with Enter key (optional)
     userInput.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -37,6 +38,35 @@ document.addEventListener("DOMContentLoaded", function() {
     userInput.addEventListener("input", function() {
         this.value = this.value.replace(/[^0-9]/g, ""); // remove non-numeric chars
     });
+
+    // --- 🔢 Mobile numeric keypad logic ---
+    const numButtons = document.querySelectorAll(".num-btn");
+    const clearBtn = document.querySelector("#clearBtn");
+    const enterBtn = document.querySelector("#enterBtn");
+
+    // Add number when user clicks keypad button
+    numButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            if (userInput.value.length < 4) {
+                userInput.value += btn.textContent;
+            }
+        });
+    });
+
+    // Delete last digit
+    if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+            userInput.value = userInput.value.slice(0, -1);
+        });
+    }
+
+    // Submit number (same as pressing Enter)
+    if (enterBtn) {
+        enterBtn.addEventListener("click", () => {
+            handleComparaison();
+            userInput.value = "";
+        });
+    }
 });
 
 // Generate a 4-digit number with unique digits

@@ -9,8 +9,12 @@
     <title>Number game</title>
 </head>
 <body>
+    <div id="bar">
+        <h1 id="title">HACKTHE<span>PIN</span></h1>
+    </div>
+
     <div id="container">
-        <h1 id="title">Hack the PIN</h1>
+       
         <p>Try to guess the 4-digit number of PIN, You have 5 attempts!</p>
         <button id="startButton" onclick="generateRandomNumber()">Start a game</button>
 
@@ -28,6 +32,30 @@
 
 
         </ul>
+
+        <div class="keypad">
+  <div class="row">
+    <button class="num-btn">1</button>
+    <button class="num-btn">2</button>
+    <button class="num-btn">3</button>
+  </div>
+  <div class="row">
+    <button class="num-btn">4</button>
+    <button class="num-btn">5</button>
+    <button class="num-btn">6</button>
+  </div>
+  <div class="row">
+    <button class="num-btn">7</button>
+    <button class="num-btn">8</button>
+    <button class="num-btn">9</button>
+  </div>
+  <div class="row">
+    <button id="clearBtn">⌫</button>
+    <button class="num-btn">0</button>
+    <button id="enterBtn">⏎</button>
+  </div>
+</div>
+
         <div id="colorLegend">
     <h3>Color Meaning:</h3>
     <ul>

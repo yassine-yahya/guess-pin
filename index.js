@@ -6,6 +6,26 @@ let message;
 let checkButton;
 
 document.addEventListener("DOMContentLoaded", function() {
+  const welcomeScreen = document.getElementById("welcomeScreen");
+  const enterGameBtn = document.getElementById("enterGameBtn");
+  const gameContainer = document.getElementById("container");
+
+  // Optional: delay auto-enter (e.g., 3 seconds)
+  // setTimeout(() => startGameTransition(), 3000);
+
+  enterGameBtn.addEventListener("click", startGameTransition);
+
+  function startGameTransition() {
+    welcomeScreen.style.animation = "fadeOut 1s forwards";
+    setTimeout(() => {
+      welcomeScreen.style.display = "none";
+      gameContainer.style.display = "block";
+    }, 1000); // match fade-out duration
+  }
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
     // Select result elements once
     results = [
         document.querySelector("#result1"),
@@ -37,6 +57,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Restrict input to numbers only (live)
     userInput.addEventListener("input", function() {
         this.value = this.value.replace(/[^0-9]/g, ""); // remove non-numeric chars
+        if (this.value.length === 4) {
+        handleComparaison();
+        this.value = "";
+    }
     });
 
     // --- 🔢 Mobile numeric keypad logic ---
@@ -45,13 +69,19 @@ document.addEventListener("DOMContentLoaded", function() {
     const enterBtn = document.querySelector("#enterBtn");
 
     // Add number when user clicks keypad button
-    numButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            if (userInput.value.length < 4) {
-                userInput.value += btn.textContent;
-            }
-        });
+ numButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        if (userInput.value.length < 4) {
+            userInput.value += btn.textContent;
+
+            // Manually trigger input event so automatic check works
+            const event = new Event("input", { bubbles: true });
+            userInput.dispatchEvent(event);
+        }
     });
+});
+
+
 
     // Delete last digit
     if (clearBtn) {
@@ -73,6 +103,8 @@ document.addEventListener("DOMContentLoaded", function() {
 function generateRandomNumber() {
     const digits = ['0','1','2','3','4','5','6','7','8','9'];
     let result = '';
+    times = 0;
+
 
     // First digit: can't be 0
     let firstIndex = Math.floor(Math.random() * 9) + 1; // 1-9
@@ -90,9 +122,32 @@ function generateRandomNumber() {
     document.querySelector("#userInput").value = "";
     times = 0;
     message.innerHTML = "";
+    let timesDisplay = document.querySelector("#times");
+    if (timesDisplay) timesDisplay.innerHTML = "Attempt: 0 of 5";
 
     return parseInt(result, 10);
 }
+
+function showDialog(message, duration = 3000) {
+    const dialog = document.getElementById("dialog");
+    const dialogMessage = document.getElementById("dialog-message");
+    const closeBtn = document.getElementById("dialog-close");
+
+    dialogMessage.textContent = message;
+    dialog.classList.add("show");
+
+    // Auto-hide after duration
+    const timer = setTimeout(() => {
+        dialog.classList.remove("show");
+    }, duration);
+
+    // Close manually
+    closeBtn.onclick = () => {
+        clearTimeout(timer);
+        dialog.classList.remove("show");
+    };
+}
+
 
 // Reset the displayed digits
 function resetResults() {
@@ -106,14 +161,13 @@ function resetResults() {
 function handleComparaison() {
     if (times >= 5) {
         checkButton.disabled = true;
-        message.innerHTML = "❌ You have no more attempts! Click 'Start' to try again.";
         return;
     }
 
     let userInput = document.querySelector("#userInput").value.trim();
 
     if (!/^\d{4}$/.test(userInput)) {
-        alert("Please enter exactly 4 digits (numbers only)");
+         showDialog("Please enter exactly 4 digits!");
         return;
     }
 
@@ -132,7 +186,7 @@ function handleComparaison() {
     let colors = Array(4).fill("red");
     for (let i = 0; i < 4; i++) {
         if (userArray[i] === randomArray[i]) {
-            colors[i] = "green";
+            colors[i] = "greenyellow";
             counts[userArray[i]]--;
         }
     }
@@ -156,7 +210,7 @@ function handleComparaison() {
         message.innerHTML = "🎉 Correct! You guessed the PIN!";
         checkButton.disabled = true;
     } else if (times === 5) {
-        message.innerHTML = `❌ Out of attempts! The number was ${randomNumber}. Press Start to try again.`;
+        message.innerHTML = `❌ Out of attempts! The number was ${randomNumber}. Press the Button to try again.`;
         checkButton.disabled = true;
     }
 }

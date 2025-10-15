@@ -2,26 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="index.js"></script>
     <link rel="stylesheet" href="styles.css">
 
-    <title>Number game</title>
+    <title>Hack The PIN</title>
 </head>
 <body>
-    <div id="bar">
-        <h1 id="title">HACKTHE<span>PIN</span></h1>
-    </div>
+  <div id="dialog" class="dialog-box">
+    <span id="dialog-message"></span>
+    <button id="dialog-close">&times;</button>
+</div>
 
-    <div id="container">
-       
-        <p>Try to guess the 4-digit number of PIN, You have 5 attempts!</p>
-        <button id="startButton" onclick="generateRandomNumber()">Start a game</button>
+   <div id="welcomeScreen">
+    <h1 class="welcome-title">WELCOME TO <span>HACK THE PIN</span></h1>
+    <p class="welcome-subtitle">Can you crack the 4-digit code?</p>
+    <button id="enterGameBtn">Start Game</button>
 
-        <input type="text" id="userInput" maxlength="4" placeholder="Enter your guess" required="true">
-        <!-- <button  id="checkButton" onclick="handleComparaison()">check</button> -->
+    <footer>
+    <p>🎮 Developed by Yassine Yahya - 2025</p>
+</footer>
+
+  </div>
+
+    <div id="container" style="display:none;">
+       <div id="bar">
+        <h1 id="title">HACK THE<span> PIN</span></h1>
+       </div>
+        <p>Guess the 4-digit number of PIN,<br> You have 5 attempts!</p>
+
+        
          <h5 id="times"></h5>
-        <h1 id="message"></h1>
+        <div id="message" class="blink-message"></div>
 
         <ul id="results">
             <li id="result1"></li>
@@ -32,6 +45,11 @@
 
 
         </ul>
+        <div id="inputSection">
+          <input type="text" id="userInput" maxlength="4" placeholder="0000" required="true" autofocus="true">
+
+        <button id="startButton" onclick="generateRandomNumber()">New Try</button>
+</div>
 
         <div class="keypad">
   <div class="row">

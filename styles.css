@@ -268,6 +268,23 @@ footer p {
   
 }
 
+.num-btn:active,
+#clearBtn:active,
+#enterBtn:active {
+    background-color: yellowgreen; 
+    border-left: black solid 4px;
+    border-bottom: black solid 4px;
+    border-top: grey solid 1px;
+    border-right: grey solid 1px;
+}
+
+.num-btn:focus,
+#clearBtn:focus,
+#enterBtn:focus {
+outline: none; /* remove focus ring */
+}
+
+
 @media (min-width: 768px) {
   #inputSection {
     justify-content: center;
